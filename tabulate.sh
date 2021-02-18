@@ -2,35 +2,40 @@
 
 awk '
 /---/ {
-    # Start of directory
-    current_dir = $2
-    dir_total[current_dir] = 0
+    # Start of group
+    group = $2
+    group_totals[group] = 0
 }
 
 !/---/ {
-    # Extension count for current directory
-    dir_total[current_dir] += $2
-    dir_ext_total[current_dir][$1] = $2
-    ext_total[$1] += $2
-
+    # Category count for current group
+    category = $1
+    count = $2
+    group_totals[group] += count
+    category_totals[category] += count
+    group_category_totals[group][category] = count
 }
 
 END {
-    # Print table of data
+    # Loop over dictionaries in ascending order of string keys
+    PROCINFO["sorted_in"] = "@ind_str_asc"
+
+    # Print header
     printf "Dir"
     printf "\t(total)"
-    for (ext in ext_total) {
-        printf "\t%s", ext
+    for (category in category_totals) {
+        printf "\t%s", category
     }
     printf "\n"
 
-    for (dir in dir_ext_total) {
-        printf dir
-        printf "\t%s", dir_total[dir]
-        for (ext in ext_total) {
+    # Print rows
+    for (group in group_category_totals) {
+        printf group
+        printf "\t%s", group_totals[group]
+        for (category in category_totals) {
             count = 0
-            if (ext in dir_ext_total[dir]) {
-                count = dir_ext_total[dir][ext]
+            if (category in group_category_totals[group]) {
+                count = group_category_totals[group][category]
             }
             printf "\t%s", count
         }
