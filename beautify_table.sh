@@ -1,5 +1,5 @@
 #!/bin/bash
 
 column -t \
-| sort -nk2 \
+| (sed -u 1q; sort -nk2) \
 | sed -e '1p;1s/\S/-/g'
