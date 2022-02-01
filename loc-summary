@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Usage: loc.sh repo1 repo2 | loc-summary.sh {report}
+# Usage: loc repo1 repo2 | loc-summary {report}
 # where report is one of:
 #  - summary   = counts by repo and extension
 #  - ext       = counts by extension
@@ -8,6 +8,8 @@
 #  - cross     = cross referenced by repo and extension
 #
 # Summarise the raw LOC report in various ways.
+#
+# Dependencies: Bash, GNU utils, datamash
 
 set -o nounset
 set -o errexit

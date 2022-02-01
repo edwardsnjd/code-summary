@@ -12,31 +12,31 @@ A little collection of scripts to summarise one or more projects:
 Summarise where the lines of code can be found:
 
 ```bash
-loc.sh repo1 repo2 \
-  | select_ext.sh \
-  | loc-summary.sh summary
+loc repo1 repo2 \
+  | select_ext \
+  | loc-summary summary
 ```
 
 Summarise by file extension:
 
 ```bash
-loc.sh repo1 repo2 \
-  | select_ext.sh \
-  | loc-summary.sh ext
+loc repo1 repo2 \
+  | select_ext \
+  | loc-summary ext
 ```
 
 Summarise by repo:
 
 ```bash
-loc.sh repo1 repo2 \
-  | select_ext.sh \
-  | loc-summary.sh repo
+loc repo1 repo2 \
+  | select_ext \
+  | loc-summary repo
 ```
 
 Cross tabulate by repo and extension:
 
 ```bash
-loc.sh repo1 repo2 \
-  | select_ext.sh \
-  | loc-summary.sh ext-repo
+loc repo1 repo2 \
+  | select_ext \
+  | loc-summary ext-repo
 ```

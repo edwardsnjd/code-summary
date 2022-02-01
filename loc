@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./loc.sh directories...
+# Usage: ./loc directories...
 #
 # Print a summary of the number of lines in each type of file by the given
 # directories.
