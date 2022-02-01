@@ -13,7 +13,7 @@ Summarise where the lines of code can be found:
 
 ```bash
 loc repo1 repo2 \
-  | select_ext \
+  | filter-extensions \
   | loc-summary summary
 ```
 
@@ -21,7 +21,7 @@ Summarise by file extension:
 
 ```bash
 loc repo1 repo2 \
-  | select_ext \
+  | filter-extensions \
   | loc-summary ext
 ```
 
@@ -29,7 +29,7 @@ Summarise by repo:
 
 ```bash
 loc repo1 repo2 \
-  | select_ext \
+  | filter-extensions \
   | loc-summary repo
 ```
 
@@ -37,6 +37,6 @@ Cross tabulate by repo and extension:
 
 ```bash
 loc repo1 repo2 \
-  | select_ext \
+  | filter-extensions \
   | loc-summary ext-repo
 ```

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: loc repo1 repo2 | select_ext
+# Usage: loc repo1 repo2 | filter-extensions
 #
 # Limit input to only lines refering to relevant extensions.
 
