@@ -14,7 +14,7 @@
 set -o nounset
 set -o errexit
 
-Main() {
+function Main {
   local report="${1:-}"
 
   case "$report" in
@@ -28,28 +28,28 @@ Main() {
 
 # Report filters
 
-ReportSummary() {
+function ReportSummary {
   sort -nrk3,3 \
     | sort -k1,1 --stable \
     | AddHeaders repo ext count \
     | Tabulate
 }
 
-ReportExtension() {
+function ReportExtension {
   datamash --sort groupby 2 sum 3 \
     | sort -nrk2,2 \
     | AddHeaders ext count \
     | Tabulate
 }
 
-ReportRepo() {
+function ReportRepo {
   datamash --sort groupby 1 sum 3 \
     | sort -nrk2,2 \
     | AddHeaders repo count \
     | Tabulate
 }
 
-ReportExtRepo() {
+function ReportExtRepo {
   datamash --sort crosstab 2,1 sum 3 \
     | sed "1s/^/(ext)/;s#N/A#0#g" \
     | Tabulate
@@ -57,18 +57,18 @@ ReportExtRepo() {
 
 # Formatting
 
-AddHeaders() {
+function AddHeaders {
   local headers=$( JoinBy "\t" "$*" )
   sed "1i${headers}"
 }
 
-JoinBy() {
+function JoinBy {
   local IFS="$1"
   shift
   echo "$*"
 }
 
-Tabulate() {
+function Tabulate {
   column -t \
     | sed "1p;1s/\S/-/g"
 }
