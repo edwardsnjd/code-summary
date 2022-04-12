@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+# Print out lists of PRs (as tsv)
+#
+# Usage: ./github-prs [merged]
+
+function main
+{
+  if [[ "$#" > 0 ]]
+  then
+    merged_prs
+  else
+    open_prs
+  fi
+}
+
+activeRepos=(
+  LIFTS-analysis
+  LIFTS-control
+  LIFTS-cpu
+  assimov_gps
+  asv_gps_msg
+  asv_pointcloud_preprocessor
+  asv_temperature_sensor
+  base_ftl
+  bunker_nix_ws
+  bunker_ros
+  fizzbuzzers
+  gradprogram2021
+  image_processor
+  neopixel_control
+  nix_scout_mini_ros
+  pellion
+  pellion_robot_ws
+  video_streaming
+)
+
+function open_prs
+{
+  echo "repo	number	title	author	createdAt	changedFiles	additions	deletions	url"
+  for repo in ${activeRepos[*]}
+  do
+    gh pr list \
+      --repo Chironix/$repo \
+      --state open \
+      --limit 1000 \
+      --json "number,title,author,createdAt,changedFiles,additions,deletions,url" \
+      --jq ".[] | [.number,.title,.author.login,.createdAt,.changedFiles,.additions,.deletions,.url] | @tsv" \
+    | sed "i $repo" \
+    | paste - -
+  done
+}
+
+function merged_prs
+{
+  echo "repo	number	title	author	createdAt	closedAt	changedFiles	additions	deletions	url"
+  for repo in ${activeRepos[*]}
+  do
+    gh pr list \
+      --repo Chironix/$repo \
+      --state merged \
+      --limit 1000 \
+      --json "number,title,author,createdAt,closedAt,changedFiles,additions,deletions,url" \
+      --jq ".[] | [.number,.title,.author.login,.createdAt,.closedAt,.changedFiles,.additions,.deletions,.url] | @tsv" \
+    | sed "i $repo" \
+    | paste - -
+  done
+}
+
+main "$@"
