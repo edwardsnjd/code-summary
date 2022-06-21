@@ -59,7 +59,9 @@ function ReportExtRepo {
 
 function AddHeaders {
   local headers=$( JoinBy "\t" "$*" )
-  sed "1i${headers}"
+  sed "1i\\
+    ${headers}
+  "
 }
 
 function JoinBy {
@@ -70,7 +72,7 @@ function JoinBy {
 
 function Tabulate {
   column -t \
-    | sed "1p;1s/\S/-/g"
+    | sed "1p;1s/[^ 	]/-/g"
 }
 
 # Entry point
